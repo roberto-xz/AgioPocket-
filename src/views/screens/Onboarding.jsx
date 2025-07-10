@@ -32,58 +32,46 @@ export default function Onboarding({text_h1,text_h2,paragraph,page, nextPage, bn
 
 const styles = StyleSheet.create({
     page: {
-        backgroundColor: "#ae60fcff",
-        flex: 1,
+        backgroundColor: "#ae60fcff", flex: 1,
         justifyContent: "center",
     },
 
     image: {
-        width: 250,
-        height: 250,
+        width: 250, height: 250,
         alignSelf: "center",
         marginTop: 30,
     },
 
     text_h1: {
-        fontSize: 58,
-        fontWeight: 800,
+        fontSize: 58, fontWeight: 800,
         color: "#f4f4f4"
     },
 
     text_h2: {
-        fontSize: 28,
-        fontWeight: 800,
+        fontSize: 28, fontWeight: 800,
         color: "#f4f4f4"
     },
 
     text_p: {
-        width: "80%",
-        fontSize: 19,
-        color: "#f4f4f4",
-        alignSelf: "center",
+        width: "80%",fontSize: 19,
+        color: "#f4f4f4",alignSelf: "center",
     },
 
     button_jump: {
-        width: 330,
-        marginTop: 10,
-        height: 50,
-        justifyContent: "center",
+        width: 330,marginTop: 10,
+        height: 50,justifyContent: "center",
         alignItems: "center"
     },
 
      button_next: {
         backgroundColor: "#000",
         borderRadius: 10,
-        width: "80%",
-        marginTop: 70,
-        height: 50,
-        justifyContent: "center",
-        alignItems: "center",
-        alignSelf: "center"
+        width: "80%",marginTop: 70,
+        height: 50, justifyContent: "center",
+        alignItems: "center", alignSelf: "center"
     },
 
     button_next_text: {
-        color: "#f1f1f1",
-        fontSize: 18
+        color: "#f1f1f1", fontSize: 18
     }
 });

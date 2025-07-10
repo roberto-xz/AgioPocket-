@@ -4,8 +4,10 @@ import {NavigationContainer, useNavigation} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import { StyleSheet } from "react-native";
 import NextButton from "../components/NextButton";
-import Onboarding from "./Onboarding";
 import SkipButton from "../components/SkipButton";
+import Onboarding from "./Onboarding";
+import Login from "./Login";
+import Sigin from "./Sigin";
 
 function page_manager() {
     return (
@@ -54,7 +56,7 @@ function page_dashbrd() {
             text_h2={"Disponível para analize"}
             paragraph={"Adicione e gerencie clientes com níveis de confiança"}
             page={"onboard1"}
-            nextPage={""}
+            nextPage={"page_login"}
             bntText={"Próximo"}
         />
     );
@@ -75,7 +77,7 @@ function Start() {
                 Agiotagem moderna e cobrança sincera !
             </Text>
             <NextButton title="Conhecer" action={()=>navigation.navigate("page_manager")}/>
-            <SkipButton title="Pular introdução" action={()=>navigation.navigate("scr_03")} />
+            <SkipButton title="Pular introdução" action={()=>navigation.reset({index: 1, routes:[{name:"page_login"}]})} />
         </View>
     );
 }
@@ -90,6 +92,8 @@ export default function Main() {
                 <stack.Screen name="page_charges" component={page_charges}/>
                 <stack.Screen name="page_visuals" component={page_visuals}/>
                 <stack.Screen name="page_dashbrd" component={page_dashbrd}/>
+                <stack.Screen name="page_login" component={Login}/>
+                <stack.Screen name="page_sigin" component={Sigin}/>
             </stack.Navigator>
         </NavigationContainer>
     );
@@ -98,18 +102,14 @@ export default function Main() {
 const styles = StyleSheet.create({
     page: {
         backgroundColor: "#ae60fcff",
-        flex: 1,
-        justifyContent: "center",
+        flex: 1, justifyContent: "center",
         alignItems: "center"
     },
 
     image: {width: "35%"},
     slogan: {
-        width: 330,
-        color: "#f1f1f1",
-        fontSize: 18,
-        fontWeight: 700,
-        textAlign: "center",
-        marginTop: 20
+        width: 330, color: "#f1f1f1",
+        fontSize: 18, fontWeight: 700,
+        textAlign: "center", marginTop: 20
     },
 });
