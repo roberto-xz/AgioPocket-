@@ -8,7 +8,7 @@ export default function Header({chars, UserName="Admin-User",showSearchBar, acti
     return(
         <View style={styles.header}>
             <View  style={styles.userInfo}>
-                <CircleIcon chars={chars || "US"} size={70} charSize={23}/>
+                <CircleIcon chars={chars || "US"} size={59} charSize={23}/>
                 <Text style={styles.userName}><Text style={styles.hiText}>Olá.  </Text>{UserName}</Text>
             </View>
             {showSearchBar && <SearchInput />}
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     },
 
     hiText: {
-        fontSize: 33,
+        fontSize: 29,
         color: "#f4f4f4",
         fontWeight: "bold"
     },

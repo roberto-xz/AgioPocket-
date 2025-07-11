@@ -14,6 +14,7 @@ function _login(userName,userPass, navigation) {
     navigation.reset({index: 1, routes:[{name:"AgioPocket"}]});
     return;
 
+
     try {
         userController.login(userName, userPass);
         navigation.reset({index: 1, routes:[{name:"AgioPocket"}]});
