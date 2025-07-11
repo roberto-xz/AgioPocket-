@@ -8,6 +8,7 @@ import SkipButton from "../components/SkipButton";
 import Onboarding from "./Onboarding";
 import Login from "./Login";
 import Sigin from "./Sigin";
+import AgioPocket from "./AgioPocket";
 
 function page_manager() {
     return (
@@ -94,6 +95,7 @@ export default function Main() {
                 <stack.Screen name="page_dashbrd" component={page_dashbrd}/>
                 <stack.Screen name="page_login" component={Login}/>
                 <stack.Screen name="page_sigin" component={Sigin}/>
+                <stack.Screen name="AgioPocket" component={AgioPocket}/>
             </stack.Navigator>
         </NavigationContainer>
     );
