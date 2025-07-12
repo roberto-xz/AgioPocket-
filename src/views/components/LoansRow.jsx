@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        fontSize: 16,
+        fontSize: 14,
         color: "#f4f4f4",
         fontWeight: "bold"
     },
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     },
 
     value: {
-        fontSize: 20,
+        fontSize: 17,
         color: "#f4f4f4",
         fontWeight: "bold"
     }
