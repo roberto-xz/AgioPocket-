@@ -3,26 +3,18 @@ import { Image, Text, View } from "react-native"
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import UserNameInput from "../components/UserNameInput";
-import { use, useState } from "react";
+import { useState } from "react";
 import UserPassInput from "../components/UserPassInput";
 import NextButton from "../components/NextButton";
 import SkipButton from "../components/SkipButton";
-import UserController from "../../controllers/UserController";
+//import UserService from "../../services/userService";
 
 function _login(userName,userPass, navigation) {
-    const userController = new UserController();
-    navigation.reset({index: 1, routes:[{name:"AgioPocket"}]});
-    return;
+   // const userService = new UserService();
 
-
-    try {
-        userController.login(userName, userPass);
+    //if (userService.login(userName, userPass)) {
         navigation.reset({index: 1, routes:[{name:"AgioPocket"}]});
-    }
-
-    catch (error) {
-        console.error("Login failed:", error.message);
-    }
+    //}
 }
 
 
