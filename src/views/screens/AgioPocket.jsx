@@ -27,14 +27,14 @@ export default function AgioPocket() {
             bottom: 0,
             left: 0,
             right: 0,
-            borderRadius: 30,
+            borderRadius: 0,
             height: 90,
             backgroundColor: "#000"
         }
     }
 
     return (
-        <Tabs.Navigator screenOptions={tabBarOptions}>
+        <Tabs.Navigator screenOptions={tabBarOptions} mainScreen="Home">
             <Tabs.Screen name="Clientes" component={Client} />
             <Tabs.Screen name="Empréstimos" component={Loans} />
             <Tabs.Screen name="Home" component={MainScreen} />
