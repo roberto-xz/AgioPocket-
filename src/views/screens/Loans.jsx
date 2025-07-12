@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { FlatList, StyleSheet, Text, View } from "react-native"
 import Header from "../components/Header";
 import ClientRowInstallments from "../components/ClientRowInstallments";
+import PaymentsWeek from "../components/PaymentsWeek";
 
 function rederItem({ item }) {
     return (
@@ -32,6 +33,7 @@ function loans() {
                  <FlatList data={client} renderItem={rederItem} keyExtractor={(item) => item.id}/>
             </View>
             <Text style={styles.text}>Cobranças dessa semana</Text>
+            <PaymentsWeek item={client} />
         </View>
     );
 }
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         width: "90%",
         paddingTop: 15,
-        paddingBottom: 15,
+        paddingBottom: 10,
      },
 
      clientList: {
