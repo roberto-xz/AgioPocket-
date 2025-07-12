@@ -1,18 +1,20 @@
-import { Text, View } from "react-native";
+
+import { StyleSheet, Text, View } from "react-native";
 import Header from "../components/Header";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MainCard from "../components/MainCard";
-
+import RecentPayments from "../components/RecentPayments";
 
 function MainScreen() {
    return (
-        <View style={{flex: 1, alignItems: "center",paddingTop: "15%", backgroundColor:"#ae60fcff"}}>
-            <Header chars={"RB"}></Header>
+        <View style={styles.container}>
+            <Header chars={"AU"} showSearchBar={false}></Header>
             <MainCard></MainCard>
+            <Text style={styles.text}>Movimentações recentes</Text>
+            <RecentPayments />
         </View>
     );
 }
-
 
 export default function AgioPocket() {
     const Tabs = createBottomTabNavigator();
@@ -38,3 +40,22 @@ export default function AgioPocket() {
         </Tabs.Navigator>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: "center",
+        paddingTop: "10%",
+        // justifyContent: "center",
+        backgroundColor: "#ae60fcff"
+    },
+
+    text: {
+        fontSize: 20,
+        color: "#fff",
+        fontWeight: "bold",
+        width: "90%",
+        paddingTop: 15,
+        paddingBottom: 15,
+    }
+});
