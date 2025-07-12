@@ -4,6 +4,8 @@ import Header from "../components/Header";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MainCard from "../components/MainCard";
 import RecentPayments from "../components/RecentPayments";
+import Client from "./Client";
+import Loans from "./Loans";
 
 function MainScreen() {
    return (
@@ -33,10 +35,9 @@ export default function AgioPocket() {
 
     return (
         <Tabs.Navigator screenOptions={tabBarOptions}>
-            <Tabs.Screen name="Home_0" component={MainScreen} />
-            <Tabs.Screen name="Home_1" component={MainScreen} />
-            <Tabs.Screen name="Home_2" component={MainScreen} />
-            <Tabs.Screen name="Home_3" component={MainScreen} />
+            <Tabs.Screen name="Clientes" component={Client} />
+            <Tabs.Screen name="Empréstimos" component={Loans} />
+            <Tabs.Screen name="Home" component={MainScreen} />
         </Tabs.Navigator>
     );
 }
