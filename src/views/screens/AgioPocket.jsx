@@ -6,6 +6,7 @@ import MainCard from "../components/MainCard";
 import RecentPayments from "../components/RecentPayments";
 import Client from "./Client";
 import Loans from "./Loans";
+import Dashboard from "./Dashboard";
 
 function MainScreen() {
    return (
@@ -36,8 +37,9 @@ export default function AgioPocket() {
     return (
         <Tabs.Navigator screenOptions={tabBarOptions} mainScreen="Home">
             <Tabs.Screen name="Clientes" component={Client} />
-            <Tabs.Screen name="Empréstimos" component={Loans} />
             <Tabs.Screen name="Home" component={MainScreen} />
+            <Tabs.Screen name="Empréstimos" component={Loans} />
+            <Tabs.Screen name="Dashboard" component={Dashboard} />
         </Tabs.Navigator>
     );
 }
@@ -47,7 +49,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         paddingTop: "10%",
-        // justifyContent: "center",
         backgroundColor: "#ae60fcff"
     },
 
