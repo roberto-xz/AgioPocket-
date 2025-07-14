@@ -1,16 +1,18 @@
 
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, Text, FlatList, StyleSheet,TouchableOpacity } from "react-native";
 import LoansRow from "./LoansRow";
 import ClientRowInstallments from "./ClientRowInstallments";
 
 
-function rederItem({ item }) {
+function rederItem({ item, onPress }) {
     return (
-        <ClientRowInstallments item={item}/>
+        <TouchableOpacity onPress={onPress}>
+            <ClientRowInstallments item={item}/>
+        </TouchableOpacity>
     )
 }
 
-export default function PaymentsWeek({item}) {
+export default function PaymentsWeek({item,}) {
     return(
         <View style={styles.container}>
             <View style={styles.weekRow}>

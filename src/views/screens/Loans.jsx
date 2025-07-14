@@ -1,18 +1,24 @@
 
 import { useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { FlatList, StyleSheet, Text, View } from "react-native"
+import { FlatList, StyleSheet, Text, TouchableOpacity, View, Alert } from "react-native"
 import Header from "../components/Header";
 import ClientRowInstallments from "../components/ClientRowInstallments";
-import PaymentsWeek from "../components/PaymentsWeek";
+import LoansDetails from "./LoansDetails";
+import { useNavigation } from "@react-navigation/native";
 
-function rederItem({ item }) {
+
+
+function RenderItem({item, navigation}) {
     return (
-        <ClientRowInstallments item={item} />
+        <TouchableOpacity onPress={()=>{navigation.navigate("details")}}>
+            <ClientRowInstallments item={item} />
+        </TouchableOpacity>
     )
 }
 
 function loans() {
+    const navigation = useNavigation();
     const [client,setClient] = useState([
         { id: '1', clientName: 'João', chars: "JO", createdDate: '12/12/2025', installments: '5/12', value: 100.00 },
         { id: '2', clientName: 'Maria', chars: "MA", createdDate: '11/11/2025', installments: '3/12', value: 200.50 },
@@ -30,10 +36,25 @@ function loans() {
             </View>
             <Text style={styles.text}>Empréstimos ativos</Text>
             <View style={styles.clientList}>
-                 <FlatList data={client} renderItem={rederItem} keyExtractor={(item) => item.id}/>
+                 <FlatList
+                    data={client}
+                    renderItem={({ item }) => <RenderItem item={item} navigation={navigation} />}
+                    keyExtractor={(item) => item.id}
+                />
             </View>
+
             <Text style={styles.text}>Cobranças dessa semana</Text>
-            <PaymentsWeek item={client} />
+            <View style={styles.weekRow}>
+                    <Text>Segunda</Text><Text>Terça</Text><Text>Quarta</Text>
+                    <Text>Quinta</Text><Text>Sexta</Text><Text>Sábado</Text>
+            </View>
+            <View style={styles.clientList}>
+                 <FlatList
+                    data={client}
+                    renderItem={({ item }) => <RenderItem item={item} navigation={navigation} />}
+                    keyExtractor={(item) => item.id}
+                />
+            </View>
         </View>
     );
 }
@@ -42,7 +63,8 @@ export default function Loans() {
     const stack = createNativeStackNavigator();
     return (
         <stack.Navigator screenOptions={{ headerShown: false }}>
-            <stack.Screen name="client" component={loans} />
+            <stack.Screen name="loans" component={loans} />
+            <stack.Screen name="details" component={LoansDetails} />
         </stack.Navigator>
     );
 }
@@ -52,7 +74,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         paddingTop: "10%",
-        backgroundColor: "#ae60fcff"
+        backgroundColor: "#ae60fcff",
     },
 
     wallateCard: {
@@ -91,5 +113,17 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: "#f4f4f4",
         shadowRadius: 3.84,
-     }
+     },
+
+    weekRow: {
+        width: '90%',
+        flexDirection: "row",
+        justifyContent: "space-between",
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: "#cecece",
+        backgroundColor: "#f4f4f4",
+        borderRadius: 10,
+        marginBottom: 10
+    },
 });
