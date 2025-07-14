@@ -1,17 +1,31 @@
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StyleSheet, Text, View } from "react-native"
+import { Modal, StyleSheet, Text, View } from "react-native"
 import Header from "../components/Header";
 import ClientList from "../components/ClientList";
 import ClientDetails from "../components/ClientDetails";
+import FabButton from "../components/FabButton";
+import { useEffect, useState } from "react";
+import ClientModal from "../components/ClientModal";
 
 function client() {
+    const [userModal,setUserModal] = useState(false);
+
     return (
         <View style={styles.container}>
             <Header chars={"AU"} showSearchBar={true}></Header>
             <Text style={styles.text}>Clientes</Text>
             <ClientList />
             <ClientDetails />
+            <Modal
+                visible={userModal}
+                animationType="slide"
+                transparent={true}
+                onRequestClose={() => setUserModal(false)} // botão voltar do android
+            >
+                <ClientModal />
+            </Modal>
+            <FabButton onPress={()=> setUserModal(true)}/>
         </View>
     );
 }
