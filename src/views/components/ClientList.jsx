@@ -35,7 +35,7 @@ export default function ClientList() {
 const styles = StyleSheet.create({
     container: {
         width: "90%",
-        height: "20%",
+        height: "15%",
         padding: 10,
         borderRadius: 10,
         shadowRadius: 3.84,
