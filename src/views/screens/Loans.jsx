@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import ClientRowInstallments from "../components/ClientRowInstallments";
 import LoansDetails from "./LoansDetails";
 import { useNavigation } from "@react-navigation/native";
+import FabButton from "../components/FabButton";
 
 
 
@@ -55,6 +56,7 @@ function loans() {
                     keyExtractor={(item) => item.id}
                 />
             </View>
+            <FabButton/>
         </View>
     );
 }
