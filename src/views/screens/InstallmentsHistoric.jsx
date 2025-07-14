@@ -1,9 +1,10 @@
 
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ClientCard from "../components/ClientCard";
 import { FontAwesome } from "@expo/vector-icons";
 import LoanIntallmentsCard from "../components/LoanInstallmentsCard";
+import HistoricInstallmentCard from "../components/HistoricInstallmentCard";
 
 export default function InstallmentsHistoric() {
     return(
@@ -17,7 +18,15 @@ export default function InstallmentsHistoric() {
                 <LoanIntallmentsCard showButtons={false}/>
                 <ClientCard />
             </View>
+
             <Text style={styles.title}>Histórico de Cobranças</Text>
+
+            <View style={styles.installmentsList}>
+                <FlatList
+                    data={[1,2,3,4,5,6,6]}
+                    renderItem={()=> <HistoricInstallmentCard />}
+                />
+            </View>
         </SafeAreaView>
     );
 }
@@ -52,6 +61,12 @@ const styles = StyleSheet.create({
         fontSize: 19,
         marginLeft: 10,
         fontWeight: 800
-    }
+    },
 
+    installmentsList: {
+        width: "90%",
+        height: "70%",
+        padding: 4,
+        borderRadius: 10,
+    }
 });
