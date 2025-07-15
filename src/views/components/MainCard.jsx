@@ -2,11 +2,17 @@ import { FontAwesome } from "@expo/vector-icons";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 
-export default function MainCard() {
+export default function MainCard({ballance}) {
     return (
         <>
         <View style={styles.card}>
-            <Text style={styles.wallate}>R$ 78.000,00 </Text>
+            <Text style={styles.wallate}>
+                {new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+                }).format(ballance)}
+            </Text>
+
             <Text style={styles.date}>Última atualização 12/12/2025</Text>
             <View style={styles.options}>
                 <TouchableOpacity style={styles.button}>

@@ -3,14 +3,14 @@ import { FontAwesome } from "@expo/vector-icons";
 import { StyleSheet, TextInput, View } from "react-native";
 
 
-export default function UserNameInput({onChange}) {
+export default function UserNameInput({onChange, placeholder}) {
 
     return (
         <View style={styles.child}>
-            <FontAwesome name="user" size={25} color={"#cecece"}/>
+            <FontAwesome name="user" size={20} color={"#cecece"}/>
             <TextInput
                 style={styles.input}
-                placeholder='Nome de usuário'
+                placeholder={placeholder}
                 onChangeText={onChange}
             />
         </View>
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 10,
         marginVertical: 10,
-        width: "76%", height: 55
+        width: "75%", height: 55
     },
 
     input: {

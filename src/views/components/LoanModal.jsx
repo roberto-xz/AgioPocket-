@@ -1,58 +1,45 @@
 
+import { Picker } from "@react-native-picker/picker";
+import { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
-export default function ClientModal({onPress}) {
+export default function LoanModal({onPress}) {
+    const [user, setUser] = useState("");
 
     return (
         <View style={styles.page}>
             <View style={styles.container}>
-                <Text style={styles.title}>Nome e sobrenome</Text>
-                <TextInput style={styles.textInput}></TextInput>
-
+                <Text style={styles.title}>Cliente</Text>
+                <Picker style={{backgroundColor: "#c3c3c3"}}
+                    selectedValue={user}
+                    onValueChange={(userName,_)=> setUser(userName)}
+                >
+                    <Picker.Item label="Teste 1" value="roberto" />
+                    <Picker.Item label="Teste 2" value="joao" />
+                    <Picker.Item label="Teste 3" value="maria" />
+                </Picker>
                 <View style={styles.towBlock}>
                     <View style={{width: "45%"}}>
-                        <Text style={styles.title}>Cpf</Text>
+                        <Text style={styles.title}>Valor total</Text>
                         <TextInput style={styles.textInput}></TextInput>
                     </View>
                     <View style={{width: "45%"}}>
-                        <Text style={styles.title}>Data de nascimento</Text>
+                        <Text style={styles.title}>N° de parcelas</Text>
                         <TextInput style={styles.textInput}></TextInput>
                     </View>
                 </View>
-
                 <View style={styles.towBlock}>
                     <View style={{width: "45%"}}>
-                        <Text style={styles.title}>Cidade</Text>
+                        <Text style={styles.title}>Data 1° parcela</Text>
                         <TextInput style={styles.textInput}></TextInput>
                     </View>
                     <View style={{width: "45%"}}>
-                        <Text style={styles.title}>Bairro</Text>
+                        <Text style={styles.title}>Percentual</Text>
                         <TextInput style={styles.textInput}></TextInput>
                     </View>
                 </View>
-
-                <View style={styles.towBlock}>
-                    <View style={{width: "45%"}}>
-                        <Text style={styles.title}>Rua</Text>
-                        <TextInput style={styles.textInput}></TextInput>
-                    </View>
-                    <View style={{width: "45%"}}>
-                        <Text style={styles.title}>N° casa</Text>
-                        <TextInput style={styles.textInput}></TextInput>
-                    </View>
-                </View>
-
-                <View style={styles.towBlock}>
-                    <View style={{width: "45%"}}>
-                        <Text style={styles.title}>Email</Text>
-                        <TextInput style={styles.textInput}></TextInput>
-                    </View>
-                    <View style={{width: "45%"}}>
-                        <Text style={styles.title}>Whatsapp</Text>
-                        <TextInput style={styles.textInput}></TextInput>
-                    </View>
-                </View>
-
+                <Text>Valor das parcelas: R$ 12.00 </Text>
+                <Text>Valor+percentual..: R$ 12.00 </Text>
                 <TouchableOpacity onPress={onPress} style={styles.button}>
                     <Text style={styles.textButton}> Criar</Text>
                 </TouchableOpacity>
@@ -103,7 +90,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#000",
         borderRadius: 10,
         width: "100%",
-        marginTop: 10,
+        marginTop: "8%",
         height: 50,
         justifyContent: "center",
         alignItems: "center",

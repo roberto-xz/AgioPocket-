@@ -7,7 +7,7 @@ export default function MoneyInput({onChange}) {
 
     return (
         <View style={styles.child}>
-            <FontAwesome name="money" size={25} color={"#cecece"}/>
+            <FontAwesome name="money" size={20} color={"#cecece"}/>
             <TextInput
                 style={styles.input}
                 placeholder='Valor do patrimônio'
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 10,
         marginVertical: 10,
-        width: "76%", height: 55
+        width: "75%", height: 55
     },
 
     input: {

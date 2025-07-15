@@ -7,7 +7,7 @@ export default function UserPassInput({onChange}) {
 
     return (
         <View style={styles.child}>
-            <FontAwesome name="key" size={25} color={"#cecece"}/>
+            <FontAwesome name="key" size={20} color={"#cecece"}/>
             <TextInput
                 style={styles.input}
                 placeholder='Senha'
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 10,
         marginVertical: 10,
-        width: "76%", height: 55
+        width: "85%", height: 55
     },
 
     input: {
