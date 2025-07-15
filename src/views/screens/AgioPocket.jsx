@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import Header from "../components/Header";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MainCard from "../components/MainCard";
@@ -7,12 +7,40 @@ import RecentPayments from "../components/RecentPayments";
 import Client from "./Client";
 import Loans from "./Loans";
 import Dashboard from "./Dashboard";
+import { useEffect, useState } from "react";
+import UserService from "../../services/UserService";
+import nameToChars from "../../utils/NameToChars";
 
 function MainScreen() {
-   return (
+    const [userProps,setUserProps] = useState({
+        name: "undefined",
+        chars: "UD",
+        ballance: 0.0
+    });
+
+    const userService = new UserService();
+    const user = userService.getUser();
+
+    useEffect(()=>{
+        if (user) {
+            setUserProps({
+                name: `${user.getName} ${user.getLast}`,
+                chars: nameToChars(user.getName, user.getLast),
+                ballance: user.getBalance
+            });
+        }
+    },[]);
+
+    return (
         <View style={styles.container}>
-            <Header chars={"AU"} showSearchBar={false}></Header>
-            <MainCard></MainCard>
+            <Header
+                chars={userProps.chars}
+                UserName={userProps.name}
+                showSearchBar={false}/>
+            <MainCard
+                ballance={userProps.ballance}
+            />
+
             <Text style={styles.text}>Movimentações recentes</Text>
             <RecentPayments />
         </View>
@@ -35,7 +63,7 @@ export default function AgioPocket() {
     }
 
     return (
-        <Tabs.Navigator screenOptions={tabBarOptions} mainScreen="Home">
+        <Tabs.Navigator screenOptions={tabBarOptions} initialRouteName="Home">
             <Tabs.Screen name="Clientes" component={Client} />
             <Tabs.Screen name="Home" component={MainScreen} />
             <Tabs.Screen name="Empréstimos" component={Loans} />

@@ -6,8 +6,7 @@ import { StyleSheet } from "react-native";
 import NextButton from "../components/NextButton";
 import SkipButton from "../components/SkipButton";
 import Onboarding from "./Onboarding";
-import Login from "./Login";
-import Sigin from "./Sigin";
+import CreateUser from "./CreateUser";
 import AgioPocket from "./AgioPocket";
 
 function page_manager() {
@@ -57,7 +56,7 @@ function page_dashbrd() {
             text_h2={"Disponível para analize"}
             paragraph={"Adicione e gerencie clientes com níveis de confiança"}
             page={"onboard1"}
-            nextPage={"page_login"}
+            nextPage={"page_createUser"}
             bntText={"Próximo"}
         />
     );
@@ -78,7 +77,7 @@ function Start() {
                 Agiotagem moderna e cobrança sincera !
             </Text>
             <NextButton title="Conhecer" action={()=>navigation.navigate("page_manager")}/>
-            <SkipButton title="Pular introdução" action={()=>navigation.reset({index: 1, routes:[{name:"page_login"}]})} />
+            <SkipButton title="Pular introdução" action={()=>navigation.reset({index: 1, routes:[{name:"page_createUser"}]})} />
         </View>
     );
 }
@@ -93,8 +92,7 @@ export default function Main() {
                 <stack.Screen name="page_charges" component={page_charges}/>
                 <stack.Screen name="page_visuals" component={page_visuals}/>
                 <stack.Screen name="page_dashbrd" component={page_dashbrd}/>
-                <stack.Screen name="page_login" component={Login}/>
-                <stack.Screen name="page_sigin" component={Sigin}/>
+                <stack.Screen name="page_createUser" component={CreateUser}/>
                 <stack.Screen name="AgioPocket" component={AgioPocket}/>
             </stack.Navigator>
         </NavigationContainer>

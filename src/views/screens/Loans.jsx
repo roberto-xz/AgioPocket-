@@ -1,12 +1,13 @@
 
 import { useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { FlatList, StyleSheet, Text, TouchableOpacity, View, Alert } from "react-native"
+import { FlatList, StyleSheet, Text, TouchableOpacity, View, Alert, Modal } from "react-native"
 import Header from "../components/Header";
 import ClientRowInstallments from "../components/ClientRowInstallments";
 import LoansDetails from "./LoansDetails";
 import { useNavigation } from "@react-navigation/native";
 import FabButton from "../components/FabButton";
+import LoanModal from "../components/LoanModal";
 
 
 
@@ -20,6 +21,8 @@ function RenderItem({item, navigation}) {
 
 function loans() {
     const navigation = useNavigation();
+    const [loanModal, setLoanModal] = useState(false);
+
     const [client,setClient] = useState([
         { id: '1', clientName: 'João', chars: "JO", createdDate: '12/12/2025', installments: '5/12', value: 100.00 },
         { id: '2', clientName: 'Maria', chars: "MA", createdDate: '11/11/2025', installments: '3/12', value: 200.50 },
@@ -56,7 +59,15 @@ function loans() {
                     keyExtractor={(item) => item.id}
                 />
             </View>
-            <FabButton/>
+            <Modal
+                visible={loanModal}
+                animationType="slide"
+                transparent={true}
+                onRequestClose={() => setLoanModal(false)}
+            >
+            <LoanModal/>
+            </Modal>
+            <FabButton onPress={()=>setLoanModal(true)}/>
         </View>
     );
 }
