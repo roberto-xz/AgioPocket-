@@ -27,7 +27,20 @@ const queries = {
             phoneNumber VARCHAR(20)
         )`,
 
-        insert_client: 'INSERT INTO clients (name,last,cpf,birthDay,city,neighborhood,street,homeNumber,email,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    insert_client: 'INSERT INTO clients (name,last,cpf,birthDay,city,neighborhood,street,homeNumber,email,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+
+    create_loan_table: `
+        CREATE TABLE IF NOT EXISTS loans (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            client_id INTEGER NOT NULL,
+            value REAL NOT NULL,
+            firstInstallmentDate TEXT NOT NULL,
+            percentual REAL NOT NULL,
+            installmentsCount INTEGER NOT NULL
+        )`,
+
+    insert_loan: 'INSERT INTO loans (client_id, value, firstInstallmentDate, percentual, installmentsCount) VALUES (?, ?, ?, ?, ?)',
+
 };
 
 export default queries;

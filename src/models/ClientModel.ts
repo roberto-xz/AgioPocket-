@@ -1,4 +1,4 @@
-import LoansModel from "./LoansModel";
+import LoanModel from "./LoanModel";
 
 
 export default class ClientModel {
@@ -13,7 +13,7 @@ export default class ClientModel {
   private homeNumber: string;
   private email: string;
   private phoneNumber: string;
-  private loans: LoansModel[] = [];
+  private loans: LoanModel[] = [];
 
   constructor(
         name: string,
@@ -52,7 +52,7 @@ export default class ClientModel {
     get getHomeNumber(): string { return this.homeNumber; }
     get getEmail(): string { return this.email; }
     get getPhoneNumber(): string { return this.phoneNumber; }
-    get getLoans(): LoansModel[] { return this.loans; }
+    get getLoans(): LoanModel[] { return this.loans; }
     set setId(value: number) { this.id = value; }
 
 //   set Name(value: string) { this.name = value; }
