@@ -1,46 +1,110 @@
 
 import { Picker } from "@react-native-picker/picker";
-import { useState } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { useEffect, useState } from "react";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from "react-native";
+import ClientService from "../../services/ClientService";
+import LoanDao from "../../daos/LoanDao";
+import LoanModel from "../../models/LoanModel";
 
+
+function createLoan(data) {
+    const loanDao = new LoanDao();
+    const loanModel =  new LoanModel(
+        data.clientId,
+        data.value,
+        data.firstInstallmentDate,
+        data.percentual,
+        data.installMentsCount
+    );
+
+    if (loanDao.insert(loanModel)) {
+        Alert.alert("Novo empréstimo", "Novo empréstimo adicionado !");
+        return;
+    }
+}
 export default function LoanModal({onPress}) {
-    const [user, setUser] = useState("");
+    const [clients, setClients] = useState([{
+        clientId: "",
+        clientName: "",
+    }]);
+
+    const [loan, setLoan] = useState({
+        clientId: 0, value: 0,
+        firstInstallmentDate: "",
+        percentual: 0,
+        installMentsCount: 0
+    });
+
+    useEffect(()=>{
+        const clientService = new ClientService();
+        const data = clientService.selectAll();
+        if (data != null) {
+            const clients = [];
+            for (const client of data) {
+                clients.push({
+                    clientId: client.getId,
+                    clientName: client.getFullName
+                })
+            }
+            setClients(clients);
+            return;
+        }
+    },[]);
 
     return (
         <View style={styles.page}>
             <View style={styles.container}>
                 <Text style={styles.title}>Cliente</Text>
-                <Picker style={{backgroundColor: "#c3c3c3"}}
-                    selectedValue={user}
-                    onValueChange={(userName,_)=> setUser(userName)}
-                >
-                    <Picker.Item label="Teste 1" value="roberto" />
-                    <Picker.Item label="Teste 2" value="joao" />
-                    <Picker.Item label="Teste 3" value="maria" />
+
+                <Picker style={{backgroundColor: "#f4f4f4"}}
+                    selectedValue={0}
+                    onValueChange={(id,_)=> setLoan(prev =>({...prev,clientId: id}))}>
+
+                    {clients.map((x) => (
+                        <Picker.Item key={x.clientId} label={x.clientName} value={x.clientId} />
+                    ))}
                 </Picker>
+
                 <View style={styles.towBlock}>
                     <View style={{width: "45%"}}>
                         <Text style={styles.title}>Valor total</Text>
-                        <TextInput style={styles.textInput}></TextInput>
+                        <TextInput
+                            style={styles.textInput}
+                            value={loan.value}
+                            onChangeText={(v)=> setLoan(prev =>({...prev, value:v}))}
+                        />
                     </View>
+
                     <View style={{width: "45%"}}>
                         <Text style={styles.title}>N° de parcelas</Text>
-                        <TextInput style={styles.textInput}></TextInput>
+                        <TextInput
+                            style={styles.textInput}
+                            value={loan.installMentsCount}
+                            onChangeText={(v)=> setLoan(prev =>({...prev, installMentsCount:v}))}
+                        />
                     </View>
                 </View>
+
                 <View style={styles.towBlock}>
                     <View style={{width: "45%"}}>
                         <Text style={styles.title}>Data 1° parcela</Text>
-                        <TextInput style={styles.textInput}></TextInput>
+                        <TextInput style={styles.textInput}/>
                     </View>
                     <View style={{width: "45%"}}>
                         <Text style={styles.title}>Percentual</Text>
-                        <TextInput style={styles.textInput}></TextInput>
+                        <TextInput
+                            style={styles.textInput}
+                            value={loan.percentual}
+                            onChangeText={(v)=> setLoan(prev =>({...prev, percentual:v}))}
+                        />
                     </View>
                 </View>
+
                 <Text>Valor das parcelas: R$ 12.00 </Text>
                 <Text>Valor+percentual..: R$ 12.00 </Text>
-                <TouchableOpacity onPress={onPress} style={styles.button}>
+
+                <TouchableOpacity  onPress={() => createLoan(loan)}
+                style={styles.button}>
                     <Text style={styles.textButton}> Criar</Text>
                 </TouchableOpacity>
             </View>
