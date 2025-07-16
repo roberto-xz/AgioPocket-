@@ -1,7 +1,9 @@
 
-import { useState } from "react";
-import { FlatList, StyleSheet, View} from "react-native";
+import { useEffect, useState } from "react";
+import { Alert, FlatList, StyleSheet, View} from "react-native";
 import ClientRow from "./ClientRow";
+import ClientService from "../../services/ClientService";
+import nameToChars from "../../utils/NameToChars";
 
 function rederItem({ item }) {
     return (
@@ -11,15 +13,27 @@ function rederItem({ item }) {
 
 export default function ClientList() {
    const [dados,setDados] = useState([
-        { id: '1', clientName: 'João', clientChars: "JO", clientContact: ' +55 87 9.1234-1234'},
-        { id: '2', clientName: 'João', clientChars: "JO", clientContact: ' +55 87 9.1234-1234'},
-        { id: '3', clientName: 'Maria', clientChars: "MA", clientContact: ' +55 87 9.1234-1234'},
-        { id: '4', clientName: 'Pedro', clientChars: "PD", clientContact: ' +55 87 9.1234-1234'},
-        { id: '5', clientName: 'Ana', clientChars: "AN", clientContact: ' +55 87 9.1234-1234'},
-        { id: '6', clientName: 'Lucas', clientChars: "LC", clientContact: ' +55 87 9.1234-1234'},
-        { id: '7', clientName: 'Carla', clientChars: "CA", clientContact: ' +55 87 9.1234-1234'},
-        { id: '8', clientName: 'Roberto', clientChars: "RO", clientContact: ' +55 87 9.1234-1234'},
+        { id: '1', clientName: '', clientChars: "", clientContact: ''}
     ]);
+
+    useEffect(()=>{
+        const clientService = new ClientService();
+        const clients = clientService.selectAll();
+        const dados = [];
+
+        if (clients != null) {
+            for (const client of clients) {
+                dados.push({
+                    id: client.id,
+                    clientName: client.getFullName,
+                    clientChars: nameToChars(client.getName, client.getLast),
+                    clientContact: client.getPhoneNumber
+                });
+                console.log(client.getPhoneNumber)
+            }
+            if (dados.length > 0 ) setDados(dados);
+        }
+    },[]);
 
     return (
         <View style={styles.container}>

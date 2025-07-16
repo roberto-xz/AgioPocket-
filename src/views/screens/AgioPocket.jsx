@@ -33,14 +33,8 @@ function MainScreen() {
 
     return (
         <View style={styles.container}>
-            <Header
-                chars={userProps.chars}
-                UserName={userProps.name}
-                showSearchBar={false}/>
-            <MainCard
-                ballance={userProps.ballance}
-            />
-
+            <Header showSearchBar={false}/>
+            <MainCard ballance={userProps.ballance}/>
             <Text style={styles.text}>Movimentações recentes</Text>
             <RecentPayments />
         </View>

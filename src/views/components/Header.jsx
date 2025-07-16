@@ -8,7 +8,7 @@ export default function Header({chars, UserName="Admin-User",showSearchBar, acti
     return(
         <View style={styles.header}>
             <View  style={styles.userInfo}>
-                <CircleIcon chars={chars || "AA"} size={49} charSize={16}/>
+                <CircleIcon chars={chars || "US"} size={49} charSize={16}/>
                 <Text style={styles.userName}><Text style={styles.hiText}>Olá.  </Text>{UserName}</Text>
             </View>
             {showSearchBar && <SearchInput />}

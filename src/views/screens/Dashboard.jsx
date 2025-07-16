@@ -10,7 +10,7 @@ export default function Dashboard() {
 
     return (
         <View style={styles.container}>
-            <Header chars={"AU"} showSearchBar={false} />
+            <Header showSearchBar={false} />
             <DashboardCards/>
             <Text style={styles.text}>Evolução do caixa</Text>
             <LineGraph data={[20, 45, 28, 80, 99, 43, 50]} />

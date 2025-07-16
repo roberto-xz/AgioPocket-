@@ -33,7 +33,7 @@ function loans() {
 
     return (
         <View style={styles.container}>
-            <Header chars={"AU"} showSearchBar={false}></Header>
+            <Header showSearchBar={false}></Header>
             <View style={styles.wallateCard}>
                 <Text style={styles._tt}>Total a receber em abril </Text>
                 <Text style={styles._vl}>R$ 78.000,00 </Text>

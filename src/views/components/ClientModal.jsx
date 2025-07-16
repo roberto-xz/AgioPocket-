@@ -1,59 +1,122 @@
 
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { useState } from "react";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from "react-native";
+import ClientModel from "../../models/ClientModel";
+import ClientService from "../../services/ClientService";
+
+function createClient(clientData) {
+    const name = clientData.name.split(" ")[0];
+    const last = clientData.name.split(" ")[1];
+    const clientService = new ClientService();
+
+    const client = new ClientModel(name,last,
+        clientData.cpf, clientData.date,
+        clientData.city,clientData.neigh,
+        clientData.street, clientData.homeNumber,
+        clientData.email,clientData.phone
+    );
+
+    if (clientService.create(client)) {
+        Alert.alert("Usuario adicionado");
+        return;
+    }
+}
 
 export default function ClientModal({onPress}) {
+    const [clientData,setClientData] = useState({
+        name: "", cpf: "", date: "",
+        city: "", neigh: "",street: "",
+        homeNumber: "", email: "", phone: ""
+    });
 
+    // é, fazer formulários é sempre uma grande M...
     return (
         <View style={styles.page}>
             <View style={styles.container}>
                 <Text style={styles.title}>Nome e sobrenome</Text>
-                <TextInput style={styles.textInput}></TextInput>
+                <TextInput
+                    style={styles.textInput}
+                    value={clientData.name}
+                    onChangeText={(v)=> setClientData(prev =>({...prev, name:v}))}
+                />
 
                 <View style={styles.towBlock}>
                     <View style={{width: "45%"}}>
                         <Text style={styles.title}>Cpf</Text>
-                        <TextInput style={styles.textInput}></TextInput>
+                        <TextInput
+                            style={styles.textInput}
+                            value={clientData.cpf}
+                            onChangeText={(v)=> setClientData(prev =>({...prev, cpf:v}))}
+                        />
                     </View>
                     <View style={{width: "45%"}}>
                         <Text style={styles.title}>Data de nascimento</Text>
-                        <TextInput style={styles.textInput}></TextInput>
+                        <TextInput
+                            style={styles.textInput}
+                            value={clientData.date}
+                            onChangeText={(v)=> setClientData(prev =>({...prev, date:v}))}
+                        />
                     </View>
                 </View>
 
                 <View style={styles.towBlock}>
                     <View style={{width: "45%"}}>
                         <Text style={styles.title}>Cidade</Text>
-                        <TextInput style={styles.textInput}></TextInput>
+                        <TextInput
+                            style={styles.textInput}
+                            value={clientData.city}
+                            onChangeText={(v)=> setClientData(prev =>({...prev, city:v}))}
+                        />
                     </View>
                     <View style={{width: "45%"}}>
                         <Text style={styles.title}>Bairro</Text>
-                        <TextInput style={styles.textInput}></TextInput>
+                        <TextInput
+                            style={styles.textInput}
+                            value={clientData.neigh}
+                            onChangeText={(v)=> setClientData(prev =>({...prev, neigh:v}))}
+                        />
                     </View>
                 </View>
 
                 <View style={styles.towBlock}>
                     <View style={{width: "45%"}}>
                         <Text style={styles.title}>Rua</Text>
-                        <TextInput style={styles.textInput}></TextInput>
+                        <TextInput
+                            style={styles.textInput}
+                            value={clientData.street}
+                            onChangeText={(v)=> setClientData(prev =>({...prev, street:v}))}
+                        />
                     </View>
                     <View style={{width: "45%"}}>
                         <Text style={styles.title}>N° casa</Text>
-                        <TextInput style={styles.textInput}></TextInput>
+                        <TextInput
+                            style={styles.textInput}
+                            value={clientData.homeNumber}
+                            onChangeText={(v)=> setClientData(prev =>({...prev, homeNumber:v}))}
+                        />
                     </View>
                 </View>
 
                 <View style={styles.towBlock}>
                     <View style={{width: "45%"}}>
                         <Text style={styles.title}>Email</Text>
-                        <TextInput style={styles.textInput}></TextInput>
+                        <TextInput
+                            style={styles.textInput}
+                            value={clientData.email}
+                            onChangeText={(v)=> setClientData(prev =>({...prev, email:v}))}
+                        />
                     </View>
                     <View style={{width: "45%"}}>
                         <Text style={styles.title}>Whatsapp</Text>
-                        <TextInput style={styles.textInput}></TextInput>
+                        <TextInput
+                            style={styles.textInput}
+                            value={clientData.phone}
+                            onChangeText={(v)=> setClientData(prev =>({...prev, phone:v}))}
+                        />
                     </View>
                 </View>
 
-                <TouchableOpacity onPress={onPress} style={styles.button}>
+                <TouchableOpacity onPress={()=>createClient(clientData)} style={styles.button}>
                     <Text style={styles.textButton}> Criar</Text>
                 </TouchableOpacity>
             </View>

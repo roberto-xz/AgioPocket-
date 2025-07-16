@@ -13,7 +13,7 @@ function client() {
 
     return (
         <View style={styles.container}>
-            <Header chars={"AU"} showSearchBar={true}></Header>
+            <Header showSearchBar={true}></Header>
             <Text style={styles.text}>Clientes</Text>
             <ClientList />
             <ClientDetails />
