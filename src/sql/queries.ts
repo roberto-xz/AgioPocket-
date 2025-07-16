@@ -13,20 +13,21 @@ const queries = {
 
 
     create_client_table: `
-        CREATE TABLE clientes (
-            id INT PRIMARY KEY AUTO_INCREMENT,
+        CREATE TABLE IF NOT EXISTS clients (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             name VARCHAR(100) NOT NULL,
             last VARCHAR(100) NOT NULL,
             cpf VARCHAR(14) UNIQUE NOT NULL,
-            birthDay DATE NOT NULL,
+            birthDay VARCHAR(16) NOT NULL,
             city VARCHAR(100),
             neighborhood VARCHAR(100),
             street VARCHAR(100),
             homeNumber VARCHAR(10),
             email VARCHAR(150) UNIQUE,
             phoneNumber VARCHAR(20)
-        );
-    `
+        )`,
+
+        insert_client: 'INSERT INTO clients (name,last,cpf,birthDay,city,neighborhood,street,homeNumber,email,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
 };
 
 export default queries;

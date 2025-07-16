@@ -40,29 +40,41 @@ export default class ClientModel {
         this.id = 0;
   }
 
-//   get Id() { return this.id; }
-//   set Id(value: number) { this.id = value; }
-//   get Name() { return this.name; }
+    get getId(): number { return this.id; }
+    get getName(): string { return this.name; }
+    get getFullName():String {return this.name+" "+this.last;}
+    get getLast(): string { return this.last; }
+    get getCpf(): string { return this.cpf; }
+    get getBirthDay(): string { return this.birthDay; }
+    get getCity(): string { return this.city; }
+    get getNeighborhood(): string { return this.neighborhood; }
+    get getStreet(): string { return this.street; }
+    get getHomeNumber(): string { return this.homeNumber; }
+    get getEmail(): string { return this.email; }
+    get getPhoneNumber(): string { return this.phoneNumber; }
+    get getLoans(): LoansModel[] { return this.loans; }
+    set setId(value: number) { this.id = value; }
+
 //   set Name(value: string) { this.name = value; }
-//   get Last() { return this.last; }
+
 //   set Last(value: string) { this.last = value; }
-//   get Cpf() { return this.cpf; }
+
 //   set Cpf(value: string) { this.cpf = value; }
-//   get BirthDay() { return this.birthDay; }
+
 //   set BirthDay(value: string) { this.birthDay = value; }
-//   get City() { return this.city; }
+
 //   set City(value: string) { this.city = value; }
-//   get Neighborhood() { return this.neighborhood; }
+
 //   set Neighborhood(value: string) { this.neighborhood = value; }
-//   get Street() { return this.street; }
+
 //   set Street(value: string) { this.street = value; }
-//   get HomeNumber() { return this.homeNumber; }
+
 //   set HomeNumber(value: string) { this.homeNumber = value; }
-//   get Email() { return this.email; }
+
 //   set Email(value: string) { this.email = value; }
-//   get PhoneNumber() { return this.phoneNumber; }
+
 //   set PhoneNumber(value: string) { this.phoneNumber = value; }
-//   get Loans() { return this.loans; }
+
 //   set Loans(value: LoansModel[]) { this.loans = value; }
 }
 
