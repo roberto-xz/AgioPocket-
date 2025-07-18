@@ -21,4 +21,9 @@ export default class ClientService {
             return this.clientDao.remove(id);
         return false;
     }
+
+    search(term:string):ClientModel[] | null {
+        return this.clientDao.searchClients(term);
+    }
+
 }
