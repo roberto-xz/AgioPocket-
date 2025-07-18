@@ -9,7 +9,7 @@ export default class LoanService {
         this.loanDao = new LoanDao();
     }
 
-    public create(loan:LoanModel): boolean {
+    public create(loan:LoanModel): number | null  {
         return this.loanDao.insert(loan);
     }
 }

@@ -9,9 +9,9 @@ export default class UserService {
         this.userDao = new UserDao();
     }
 
-    create(name: string,last: string,money: number): boolean {
-        if (name || last || money ) {
-            const userMdl = new UserModel(name, last, money);
+    create(name: string,last: string): boolean {
+        if (name && last ) {
+            const userMdl = new UserModel(name, last, 0.00);
             return this.userDao.insert(userMdl);
         }
         return false;

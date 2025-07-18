@@ -15,4 +15,10 @@ export default class ClientService {
     selectAll():ClientModel[] | null {
         return this.clientDao.selectAll();
     }
+
+    remove(id: number): boolean {
+        if (id)
+            return this.clientDao.remove(id);
+        return false;
+    }
 }
