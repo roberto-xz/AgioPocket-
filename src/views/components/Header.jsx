@@ -17,7 +17,7 @@ function getUserData() {
     return {userChar: "UD",userName: "undefined"}
 }
 
-export default function Header({showSearchBar}) {
+export default function Header({showSearchBar,onSearchType}) {
     const userData = getUserData();
     return(
         <View style={styles.header}>
@@ -28,7 +28,7 @@ export default function Header({showSearchBar}) {
                     {userData.userName}
                 </Text>
             </View>
-            {showSearchBar && <SearchInput />}
+            {showSearchBar && <SearchInput onChange={onSearchType}/>}
         </View>
     );
 }
