@@ -12,15 +12,16 @@ export default class LoanDao {
         this.database.execSync(queries.create_loan_table);
     }
 
-    insert(loan: LoanModel): boolean {
+    insert(loan: LoanModel): number | null {
         try {
             const result = this.database.runSync(
                 queries.insert_loan,loan.getClientId,
                 loan.getValue, loan.getFirstInstallmentDate, loan.getPercentual,
                 loan.getInstallmentsCount
             );
-            return ( result.changes > 0 )
+
+            return (result.changes > 0 ) ? result.lastInsertRowId : null;
         }
-        catch(error){return false;}
+        catch(error){return null;}
     }
 }

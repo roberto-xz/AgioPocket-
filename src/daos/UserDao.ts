@@ -14,10 +14,13 @@ export default class UserDao {
     }
 
     public insert(user: UserModel): boolean {
-        const result = this.database.runSync(
-            queries.insert_user,user.getName,user.getLast,user.getBalance
-        );
-        return ( result.changes > 0 )
+        try {
+            const result = this.database.runSync(
+                queries.insert_user,user.getName,user.getLast,user.getBalance
+            );
+            return ( result.changes > 0 )
+        }
+        catch(error) {return false;}
     }
 
     public select(): UserModel | null {
