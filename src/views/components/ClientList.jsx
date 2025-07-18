@@ -22,7 +22,6 @@ function renderItem({item, navigation, onDelete}) {
 
 export default function ClientList({clients, onDelete}) {
     const navigation = useNavigation();
-
     return (
         <View style={styles.container}>
             <FlatList
