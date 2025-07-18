@@ -6,7 +6,6 @@ import ClientList from "../components/ClientList";
 import FabButton from "../components/FabButton";
 import { useEffect, useState } from "react";
 import ClientForm from "./ClientForm";
-import { useNavigation } from "@react-navigation/native";
 import ClientDetails from "./ClientDetails";
 import ClientService from "../../services/ClientService";
 import nameToChars from "../../utils/NameToChars";
@@ -55,15 +54,35 @@ function client() {
             setData(fetchedClients);
             return;
         }
-
         Alert.alert("Erro", "O email ou numero de telefone já foi cadastrado");
         return;
+    }
+
+    const searchCL = (term) => {
+        if (term.length >= 1) {
+            const clients = new Array();
+            const data = service.search(term);
+            if (data) {
+                for (client of data ) {
+                    clients.push({
+                        id: client.getId,
+                        name: client.getFullName,
+                        char: nameToChars(client.getName, client.getLast),
+                        contact: client.getPhoneNumber
+                    });
+                }
+                setData(clients);
+                return;
+            }
+        }
+        const fetchedClients = loadClients();
+        setData(fetchedClients);
     }
 
 
     return (
         <View style={styles.container}>
-            <Header showSearchBar={true}></Header>
+            <Header showSearchBar={true} onSearchType={searchCL}></Header>
             <Text style={styles.text}>Clientes</Text>
             <ClientList clients={data} onDelete={deleteCl}/>
             <Modal
