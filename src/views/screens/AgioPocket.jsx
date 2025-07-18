@@ -10,6 +10,8 @@ import Dashboard from "./Dashboard";
 import { useEffect, useState } from "react";
 import UserService from "../../services/UserService";
 import nameToChars from "../../utils/NameToChars";
+import LineGraph from "../components/LineGraph";
+import DashboardCards from "../components/DashboardCards";
 
 function MainScreen() {
     const [userProps,setUserProps] = useState({
@@ -35,8 +37,9 @@ function MainScreen() {
         <View style={styles.container}>
             <Header showSearchBar={false}/>
             <MainCard ballance={userProps.ballance}/>
-            <Text style={styles.text}>Movimentações recentes</Text>
-            <RecentPayments />
+            {/* <DashboardCards/> */}
+            <Text style={styles.text}>Evolução do caixa</Text>
+            <LineGraph data={[20, 45, 28, 80, 99, 43, 50]} />
         </View>
     );
 }

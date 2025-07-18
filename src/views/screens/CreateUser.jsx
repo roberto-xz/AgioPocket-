@@ -9,15 +9,20 @@ import MoneyInput from "../components/MoneyInput";
 import UserService from "../../services/UserService";
 
 
-function createAccount(name, money, navigation) {
+function createAccount(name, navigation) {
     const userService = new UserService();
+
+    navigation.reset({index: 1, routes:[{name:"AgioPocket"}]})
+    return
+
     if (name.split(" ").length > 1 ) {
         const userFName = name.split(" ")[0];
         const userSName = name.split(" ")[1];
 
-        userService.create(userFName,userSName,money);
-        navigation.reset({index: 1, routes:[{name:"AgioPocket"}]})
-        return;
+        if (userService.create(userFName,userSName)){
+            navigation.reset({index: 1, routes:[{name:"AgioPocket"}]})
+            return;
+        }
     }
     Alert.alert("Novo usuário","Error ao criar usuário");
     return
@@ -35,14 +40,13 @@ export default function CreateUser() {
                 style={styles.image}
                 resizeMode="contain"
             />
-            <Text style={styles.slogan}>
-                Criar Usuário
-            </Text>
-
+            <Text style={styles.slogan}> Criar Usuário </Text>
             <UserNameInput onChange={setUserName} placeholder="Nome e sobre-nome"/>
-            <MoneyInput onChange={setUserMony}/>
 
-            <NextButton title={"Criar usuário"} action={()=>createAccount(userName,userMony,navigation)}/>
+            <NextButton
+                title={"Criar usuário"}
+                action={()=>createAccount(userName,navigation)}
+            />
         </View>
     );
 }
