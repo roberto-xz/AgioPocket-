@@ -5,38 +5,23 @@ export default class ClientModel {
   private id: number;
   private name: string;
   private last: string;
-  private cpf: string;
-  private birthDay: string;
-  private city: string;
-  private neighborhood: string;
-  private street: string;
-  private homeNumber: string;
   private email: string;
   private phoneNumber: string;
+  private sendEmails: boolean;
   private loans: LoanModel[] = [];
 
   constructor(
         name: string,
         last: string,
-        cpf: string,
-        birthDay: string,
-        city: string,
-        neighborhood: string,
-        street: string,
-        homeNumber: string,
         email: string,
-        phoneNumber: string
+        phoneNumber: string,
+        sendEmails: boolean
     ) {
         this.name = name;
         this.last = last;
-        this.cpf = cpf;
-        this.birthDay = birthDay;
-        this.city = city;
-        this.neighborhood = neighborhood;
-        this.street = street;
-        this.homeNumber = homeNumber;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.sendEmails = sendEmails;
         this.id = 0;
   }
 
@@ -44,15 +29,15 @@ export default class ClientModel {
     get getName(): string { return this.name; }
     get getFullName():String {return this.name+" "+this.last;}
     get getLast(): string { return this.last; }
-    get getCpf(): string { return this.cpf; }
-    get getBirthDay(): string { return this.birthDay; }
-    get getCity(): string { return this.city; }
-    get getNeighborhood(): string { return this.neighborhood; }
-    get getStreet(): string { return this.street; }
-    get getHomeNumber(): string { return this.homeNumber; }
     get getEmail(): string { return this.email; }
     get getPhoneNumber(): string { return this.phoneNumber; }
     get getLoans(): LoanModel[] { return this.loans; }
+
+    get getSendEmail():string {
+        return (this.sendEmails) ? "Y" : "N";
+    }
+
+
     set setId(value: number) { this.id = value; }
 
 //   set Name(value: string) { this.name = value; }

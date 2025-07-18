@@ -1,5 +1,5 @@
 
-import InstallmentsModel from "./InstallmentsModel"
+import InstallmentsModel from "./InstallmentModel"
 
 export default class LoanModel {
     private id: number

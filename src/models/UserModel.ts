@@ -6,6 +6,7 @@ export default class UserModel {
     private name: string;
     private last: string;
     private balance: number;
+    private lastBalanceUpdated: string;
     private clients: ClientModel[] = [];
 
     constructor(name: string,last: string,balance: number) {
