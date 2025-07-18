@@ -20,6 +20,7 @@ export default function MainCard({ballance}) {
                 </TouchableOpacity>
             </View>
         </View>
+{/*
         <View style={styles.wallateCards}>
             <View style={styles.wallateCard}>
                 <Text style={styles._tt}>Total a receber </Text>
@@ -29,7 +30,7 @@ export default function MainCard({ballance}) {
                 <Text style={styles._tt}>Total emprestado</Text>
                 <Text style={styles._vl}>R$ 78.000,00 </Text>
             </View>
-        </View>
+        </View> */}
         </>
     );
 }

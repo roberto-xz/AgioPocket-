@@ -1,30 +1,23 @@
 
 
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import CircleIcon from "./CircleIcon";
-import { FontAwesome } from "@expo/vector-icons";
 
-export default function ClientRow({ item, showButtons = true }) {
-    return (
-        <View style={styles.item}>
-            <CircleIcon chars={item.clientChars} size={44}/>
-            <View>
-                <Text style={{ fontSize: 19, fontWeight: "bold" }}>{item.clientName}</Text>
-                <Text style={{ fontSize: 16, color: "#888" }}>{item.clientContact}</Text>
-            </View>
-            {showButtons &&
-                <Text style={styles.options}>
-                    <TouchableOpacity>
-                        <FontAwesome name="trash" size={25} color={"#818181"} style={{marginRight: 20}}/>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                        <FontAwesome name="edit" size={25} color={"#818181"} style={{marginRight: 10}}/>
-                    </TouchableOpacity>
-                </Text>
-            }
-        </View>
-    );
+export default function ClientRow({client, press, longPress}) {
+    if (client) // resolve um bug estranho, somente aqui, o array chega uma linha undefined
+        return (
+            <TouchableOpacity style={styles.item} onPress={press} onLongPress={longPress}>
+                <CircleIcon chars={client.char || "UN"} size={44}/>
+                <View>
+                    <Text style={{ fontSize: 19, fontWeight: "bold" }}>
+                        {client.name || "Uknow Name"}
+                    </Text>
+                    <Text style={{ fontSize: 16, color: "#888" }}>
+                        {client.contact || "87 9.1234-1234" }
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        );
 }
 
 

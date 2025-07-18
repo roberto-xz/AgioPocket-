@@ -5,6 +5,8 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from "reac
 import ClientService from "../../services/ClientService";
 import LoanDao from "../../daos/LoanDao";
 import LoanModel from "../../models/LoanModel";
+import InstallmentsModel from "../../models/InstallmentModel";
+import InstallmentDao from "../../daos/InstallmentDao";
 
 
 function createLoan(data) {
@@ -16,10 +18,18 @@ function createLoan(data) {
         data.percentual,
         data.installMentsCount
     );
+    const status = loanDao.insert(loanModel);
 
-    if (loanDao.insert(loanModel)) {
-        Alert.alert("Novo empréstimo", "Novo empréstimo adicionado !");
-        return;
+    if (status) {
+        // gerar as parcelas aqui
+        const installment = new InstallmentsModel(status,1,78,"paga","10-20-2025");
+        const installmentDao = new InstallmentDao();
+
+        if (installmentDao.insert(installment)) {
+            Alert.alert("Novo empréstimo", "Novo empréstimo adicionado !");
+            console.log(installment)
+            return;
+        }
     }
 }
 export default function LoanModal({onPress}) {
