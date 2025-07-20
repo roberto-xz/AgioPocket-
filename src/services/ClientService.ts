@@ -16,6 +16,10 @@ export default class ClientService {
         return this.clientDao.selectAll();
     }
 
+    selectById(id:number):ClientModel | null {
+        return this.clientDao.selectById(id);
+    }
+
     remove(id: number): boolean {
         if (id)
             return this.clientDao.remove(id);

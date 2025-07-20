@@ -14,7 +14,7 @@ function renderItem({item, navigation, onDelete}) {
     return (
          <ClientRow
             client={item}
-            press={()=>navigation.navigate("detais")}
+            press={()=>navigation.navigate("detais",{clientId})}
             longPress={() => deleteClient({clientId,onDelete})}
         />
     );

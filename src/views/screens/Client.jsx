@@ -5,7 +5,7 @@ import Header from "../components/Header";
 import ClientList from "../components/ClientList";
 import FabButton from "../components/FabButton";
 import { useEffect, useState } from "react";
-import ClientForm from "./ClientForm";
+import ClientForm from "../components/ClientForm";
 import ClientDetails from "./ClientDetails";
 import ClientService from "../../services/ClientService";
 import nameToChars from "../../utils/NameToChars";

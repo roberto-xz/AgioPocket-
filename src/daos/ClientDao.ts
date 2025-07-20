@@ -43,6 +43,20 @@ export default class ClientDao{
         return (data.length > 0 ) ? data : null;
     }
 
+    selectById(id:number):ClientModel | null {
+        try {
+            const row:any = this.database.getFirstSync('SELECT * FROM clients WHERE id = ?',id);
+            if (row) {
+                let sendEmail = (row.sendEmails == "Y") ? true : false;
+                let client = new ClientModel(row.name, row.last, row.email, row.phoneNumber,sendEmail);
+                client.setId = row.id;
+                return client;
+            }
+            return null;
+        }catch(err){return null;}
+    }
+
+
     searchClients(searchTerm: string): ClientModel[] | null {
         let data: ClientModel[] = [];
         const query = `SELECT * FROM clients WHERE name LIKE ? OR last LIKE ? OR phoneNumber LIKE ?`;
