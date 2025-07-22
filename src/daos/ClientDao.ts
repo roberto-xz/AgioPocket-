@@ -29,6 +29,21 @@ export default class ClientDao{
         }catch(error){return false;}
     }
 
+    update(client: ClientModel) : boolean {
+        try {
+            const result = this.database.runSync(
+                    queries.update_client,
+                    client.getName,
+                    client.getLast,
+                    client.getEmail,
+                    client.getPhoneNumber,
+                    client.getSendEmail,
+                    client.getId
+            );
+            return ( result.changes > 0 )
+        }catch(error){ console.log(error); return false;}
+    }
+
     selectAll():ClientModel[] | null {
         let data:ClientModel[] = [];
         const allRows:any = this.database.getAllSync('SELECT * FROM clients');

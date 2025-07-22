@@ -12,6 +12,10 @@ export default class ClientService {
         return this.clientDao.insert(client);
     }
 
+    update(client: ClientModel): boolean {
+        return this.clientDao.update(client);
+    }
+
     selectAll():ClientModel[] | null {
         return this.clientDao.selectAll();
     }

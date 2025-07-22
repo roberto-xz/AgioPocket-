@@ -23,6 +23,7 @@ const queries = {
         )`,
 
     insert_client: 'INSERT INTO clients (name,last,email,phoneNumber,sendEmails) VALUES (?, ?, ?, ?, ?)',
+    update_client: 'UPDATE clients SET name = ?, last = ?, email = ?, phoneNumber = ?, sendEmails = ? WHERE id = ?',
 
     create_loan_table: `
         CREATE TABLE IF NOT EXISTS loans (
