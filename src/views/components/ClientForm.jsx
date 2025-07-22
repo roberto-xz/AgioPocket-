@@ -11,19 +11,24 @@ function register({userData, onCreate}) {
         userData.last,
         userData.email,
         userData.phone,
-        userData.senEmail
-    ));
+        userData.sendEmail
+    ))
 }
 
 export default function ClientForm({onCreate, isUpdate=false, client}) {
-    const [checkbox, setCheckBox] = useState(false);
-    const [userData, setData] = useState({name: "", last: "", email: "", phone: "", senEmail: checkbox});
-
+    const [userData, setData] = useState({name: "", last: "", email: "", phone: "", sendEmail: false});
     useEffect(()=>{
         if (isUpdate) {
-            setData(client);
+            setData({
+                id: client.id,
+                name: client.name,
+                last: client.last,
+                email: client.email,
+                phone: client.phoneNumber,
+                sendEmail: client.sendEmails
+            })
         }
-    })
+    },[])
 
     return (
         <SafeAreaView style={style.page}>
@@ -36,6 +41,7 @@ export default function ClientForm({onCreate, isUpdate=false, client}) {
                         onChangeText={(v)=> setData(prev =>({...prev, name:v}))}
                     />
                     <TextInput
+                        value={userData.last}
                         style={style.name} placeholder="Sobre nome"
                         onChangeText={(v)=> setData(prev =>({...prev, last:v}))}
                     />
@@ -44,6 +50,7 @@ export default function ClientForm({onCreate, isUpdate=false, client}) {
                 <View style={style.row}>
                     <Text style={style.nameLabel}>Contato</Text>
                     <TextInput
+                        value={userData.phone}
                         style={style.input} placeholder="87 9.1234-1234"
                         onChangeText={(v)=> setData(prev =>({...prev, phone:v}))}
                     />
@@ -52,12 +59,16 @@ export default function ClientForm({onCreate, isUpdate=false, client}) {
                     <Text style={style.nameLabel}>Email</Text>
                     <TextInput
                         style={style.input}
+                        value={userData.email}
                         placeholder="joao.alberto@email.com"
                         onChangeText={(v)=> setData(prev =>({...prev, email:v}))}
                     />
                 </View>
                 <View style={style.checkbox}>
-                    <CheckBox onClick={()=>setCheckBox(!checkbox)} isChecked={checkbox}/>
+                    <CheckBox
+                        onClick={() => setData(prev => ({ ...prev, sendEmail: !prev.sendEmail }))}
+                        isChecked={userData.sendEmail}
+                    />
                     <Text style={style.checkboxText}>Enviar cobranças por email?</Text>
                 </View>
                 <TouchableOpacity style={style.button} onPress={()=>register({userData, onCreate})}>

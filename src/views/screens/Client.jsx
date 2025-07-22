@@ -9,6 +9,7 @@ import ClientForm from "../components/ClientForm";
 import ClientDetails from "./ClientDetails";
 import ClientService from "../../services/ClientService";
 import nameToChars from "../../utils/NameToChars";
+import { useNavigation } from "@react-navigation/native";
 
 function loadClients() {
     const clients = new Array();
@@ -29,32 +30,64 @@ function loadClients() {
 }
 
 function client() {
+    const [modifyData, setModifyData] = useState(false);
     const [modal,setModal] = useState(false);
     const [data,setData] = useState([]);
     const service = new ClientService();
+    const navigation = useNavigation();
 
     useEffect(() => {
         const fetchedClients = loadClients();
         setData(fetchedClients);
-    }, []);
+    }, [modifyData]);
 
-    const deleteCl = (id) => {
-        if (service.remove(id)) {
-            Alert.alert("Sucesso", "Cliente removido!");
-            setData((prev) => prev.filter(c => c.id !== id));
-            return;
-        }
-        Alert.alert("Erro", "Não foi possível remover.");
+    const deleteCl = ({id, page}) => {
+        Alert.alert("Remover Cliente","Tem certeza que deseja remover este cliente?'",
+            [{text: "Cancelar", style: "cancel"},{
+                text: 'Sim', style: 'destructive',
+                onPress: ()=>{
+                    if (service.remove(id)) {
+                        Alert.alert("Sucesso", "Cliente removido!",[{
+                            text: "Ok",
+                            onPress: ()=>{
+                                setModifyData(!modifyData)
+                                if (page == "details") navigation.goBack();
+                            }
+                        }]); return;
+                    }
+                    Alert.alert("Erro", "Não foi possível remover.");
+                    return;
+                }
+            }]
+        )
     };
 
     const createCl = (client) => {
         if (service.create(client)) {
-            Alert.alert("Sucesso", "Novo cliente adicionado !!");
-            const fetchedClients = loadClients();
-            setData(fetchedClients);
-            return;
+            Alert.alert("Sucesso", "Novo cliente adicionado !!",[{
+                text: "Ok",
+                onPress: ()=>{
+                    setModal(false);
+                    setModifyData(!modifyData)
+                }
+            }]); return;
         }
         Alert.alert("Erro", "O email ou numero de telefone já foi cadastrado");
+        return;
+    }
+
+    const updateCL = (client) => {
+        if (service.update(client)) {
+            Alert.alert("Sucesso", "Os dados do cliente foram atualizados !!",[{
+                text: "Ok",
+                onPress: ()=>{
+                    setModal(false);
+                    setModifyData(!modifyData)
+                }
+            }]); return;
+        }
+
+        Alert.alert("Erro", "Ouve um erro e os dados do cliente não foram atualizados !!");
         return;
     }
 
@@ -74,9 +107,11 @@ function client() {
                 setData(clients);
                 return;
             }
+            setData[{}];
+        } else {
+            const fetchedClients = loadClients();
+            setData(fetchedClients);
         }
-        const fetchedClients = loadClients();
-        setData(fetchedClients);
     }
 
 
@@ -84,7 +119,11 @@ function client() {
         <View style={styles.container}>
             <Header showSearchBar={true} onSearchType={searchCL}></Header>
             <Text style={styles.text}>Clientes</Text>
-            <ClientList clients={data} onDelete={deleteCl}/>
+            <ClientList
+                clients={data}
+                onDelete={deleteCl}
+                onUpdate={updateCL}
+            />
             <Modal
                 visible={modal}
                 animationType="slide"

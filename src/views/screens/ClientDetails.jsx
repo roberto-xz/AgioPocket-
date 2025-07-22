@@ -1,13 +1,27 @@
 import { FontAwesome } from "@expo/vector-icons";
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, FlatList, Modal, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import CircleIcon from "../components/CircleIcon";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import ClientService from "../../services/ClientService";
+import ClientForm from "../components/ClientForm";
+import nameToChars from "../../utils/NameToChars";
+import FabButton from "../components/FabButton";
+import LoanCard from "../components/LoanCard";
+import LoanForm from "../components/LoanForm";
 
 
 export default function ClientDetails() {
     const navigation = useNavigation();
+    const [editModal,setEditModal] = useState(false);
+    const [LoanModal,setLoanModal] = useState(false);
+
+    const [clientUpdate,setClientUpdate] = useState(false);
+
+    const route = useRoute()
+    const service = new ClientService()
+    const { clientId, onUpdate, onDelete } = route.params;
+
     const [client, setClient] = useState({
         name: "Nome",
         last: "Sobre-Nome",
@@ -15,11 +29,6 @@ export default function ClientDetails() {
         phoneNumber: '(87) 9.1234-5678',
         sendEmails: false
     })
-
-    const route = useRoute()
-    const service = new ClientService()
-
-    const { clientId } = route.params;
 
     useEffect(()=>{
         const data = service.selectById(clientId);
@@ -33,7 +42,18 @@ export default function ClientDetails() {
             })
         }
 
-    },[])
+    },[clientUpdate])
+
+    const updateCL = (client)=> {
+        client.setId =  clientId;
+        setClientUpdate(!clientUpdate);
+        setEditModal(false);
+        onUpdate(client);
+    }
+
+    const createLN = ()=>{
+
+    }
 
     return (
         <SafeAreaView style={style.page}>
@@ -44,7 +64,7 @@ export default function ClientDetails() {
 
             <View style={style.userDetails}>
                 <View style={style.userNameBox}>
-                    <CircleIcon charSize={13} chars={"UR"} size={55}/>
+                    <CircleIcon charSize={13} chars={nameToChars(client.name, client.last)} size={55}/>
                     <Text style={style.userName}> {client.name} {client.last} </Text>
                 </View>
                 <View style={style.inf}>
@@ -63,16 +83,46 @@ export default function ClientDetails() {
                     <Text style={style.text}>Aceita receber Email?</Text>
                 </View>
                 <View style={style.buttons}>
-                    <TouchableOpacity style={style.button}>
+                    <TouchableOpacity
+                        style={style.button}
+                        onPress={()=>setEditModal(true)}>
                         <Text style={{color: "#f4f4f4"}}>Editar</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={style.button}>
+                    <TouchableOpacity
+                        style={style.button}
+                        onPress={()=> onDelete({id:clientId, page:"details"})}>
                         <Text style={{color: "#f4f4f4"}}>Excluir</Text>
                     </TouchableOpacity>
                 </View>
             </View>
+
+            <Modal
+                visible={editModal}
+                animationType="slide"
+                transparent={true}
+                onRequestClose={() => setEditModal(false)}>
+                <ClientForm onCreate={updateCL} isUpdate={true} client={client}/>
+            </Modal>
+            <Modal
+                visible={LoanModal}
+                animationType="slide"
+                transparent={true}
+                onRequestClose={() => setLoanModal(false)}>
+                <LoanForm onCreate={createLN}/>
+            </Modal>
+
             <Text style={style.label}>Emprestimos</Text>
+            <View style={style.loans}>
+                <FlatList
+                    key={2}
+                    numColumns={2}
+                    data={[{id: 1, text: "ola"},{id: 2, text: "ola"},{id: 3, text: "ola"}]}
+                    renderItem={()=> <LoanCard/>}
+                    keyExtractor={(item) => item.id}
+                />
+            </View>
+            <FabButton onPress={()=> setLoanModal(!LoanModal)}></FabButton>
         </SafeAreaView>
     );
 }
@@ -84,7 +134,7 @@ const style = StyleSheet.create({
         alignItems: "center"
     },
 
-      backButton: {
+    backButton: {
         width: "90%",
         flexDirection: "row",
         marginTop: "10%",
@@ -145,6 +195,13 @@ const style = StyleSheet.create({
         padding: 3,
         width: "95%",
         padding: 10,
+    },
+
+    loans: {
+        width: "95%",
+        height: "50%",
+        backgroundColor: "#f4f4f4",
+        borderRadius: 20
     }
 
 });

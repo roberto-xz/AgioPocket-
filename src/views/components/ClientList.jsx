@@ -4,29 +4,27 @@ import ClientRow from "./ClientRow";
 import { useNavigation } from "@react-navigation/native";
 
 function deleteClient({clientId,onDelete}) {
-    Alert.alert("Apagar Cliente", "Deseja apagar esse cliente?",
-        [{text: "Não", style: "cancel"},{text: "Sim", onPress:()=>onDelete(clientId)}]
-    )
+    onDelete({id:clientId, page:"clientList"});
 }
 
-function renderItem({item, navigation, onDelete}) {
+function renderItem({item, navigation, onDelete, onUpdate}) {
     const clientId = item.id;
     return (
          <ClientRow
             client={item}
-            press={()=>navigation.navigate("detais",{clientId})}
+            press={()=>navigation.navigate("detais",{clientId,onUpdate,onDelete})}
             longPress={() => deleteClient({clientId,onDelete})}
         />
     );
 }
 
-export default function ClientList({clients, onDelete}) {
+export default function ClientList({clients, onDelete, onUpdate}) {
     const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <FlatList
                 data={clients}
-                renderItem={({ item }) => renderItem({ item, navigation, onDelete })}
+                renderItem={({ item }) => renderItem({ item, navigation, onUpdate,onDelete })}
                 keyExtractor={(item) => item.id}
             />
         </View>
