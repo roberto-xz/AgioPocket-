@@ -7,7 +7,6 @@ export default class InstallmentModel {
     private value: number;
     private status: string;
     private dueDate: string
-    //private historicCount: number;
 
     constructor (
         loanId: number,
@@ -21,6 +20,7 @@ export default class InstallmentModel {
         this.value = value;
         this.status = status;
         this.dueDate = dueDate;
+        this.id = NaN;
     }
 
     public get getLoanId(): number {return this.loanId}
@@ -28,7 +28,5 @@ export default class InstallmentModel {
     public get getValue(): number {return this.value}
     public get getStatus(): string {return this.status}
     public get getDueDate(): string {return this.dueDate}
-
-
     public set setId(id: number) {this.id = id}
 }

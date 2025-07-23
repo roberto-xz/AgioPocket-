@@ -1,34 +1,35 @@
 
-import InstallmentsModel from "./InstallmentModel"
-
 export default class LoanModel {
     private id: number
-    private client_id: number
+    private clientId: number
     private value: number
-    private firstInstallmentDate: string
+    private date: string
     private percentual: number
-    private installMentsCount: number
-    private installments: InstallmentsModel[];
+    private loans: number
+    private loansPrices: number
 
     constructor (
         client_id: number,
         value: number,
-        firstInstallmentDate: string,
+        date: string,
         percentual: number,
-        installMentsCount: number) {
-            this.client_id = client_id;
+        loans: number,
+        loansPrices: number) {
+            this.clientId = client_id;
             this.value = value;
-            this.firstInstallmentDate = firstInstallmentDate;
+            this.date = date;
             this.percentual = percentual;
-            this.installMentsCount = installMentsCount;
+            this.loans = loans,
+            this.loansPrices = loansPrices
+            this.id = NaN;
     }
 
     public get getId():number {return this.id}
-    public get getClientId():number {return this.client_id;}
+    public get getClientId():number {return this.clientId;}
     public get getValue():number {return this.value;}
-    public get getFirstInstallmentDate():string  {return this.firstInstallmentDate;}
+    public get getDate():string  {return this.date;}
     public get getPercentual():number {return this.percentual;}
-    public get getInstallmentsCount():number {return this.installMentsCount}
-
+    public get getLoans(): number {return this.loans}
+    public get getLoansPrices(): number {return this.loansPrices}
     public set setId(id: number) {this.id = id}
 }

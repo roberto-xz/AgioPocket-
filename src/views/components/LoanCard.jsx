@@ -1,19 +1,21 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 
-export default function LoanCard() {
+export default function LoanCard({onPress, onLongPress, loan}) {
     return (
-        <View style={style.card}>
+        <TouchableOpacity
+            style={style.card}
+            onPress={()=>onPress(loan)}
+            onLongPress={()=>onLongPress(loan)}
+        >
             <View style={style.head}>
-                <Text style={style.price}>R$ 78,000,12</Text>
-                <Text style={style.loans}>20 parcelas</Text>
+                <Text style={style.price}>
+                    {new Intl.NumberFormat("pt-BR",{style: 'currency',currency: 'BRL'}).format(loan.value)}
+                </Text>
+                <Text style={style.loans}>{loan.loans} parcelas</Text>
             </View>
-            <Text style={style.date}>1° parcela 12/12/2025</Text>
-            <View style={{backgroundColor: "gray", width: "100%", height: 15, borderRadius: 100}}>
-                <View style={{backgroundColor: "#313131", width: "90%", height: 15, borderRadius: 100}}></View>
-            </View>
-            <Text style={style.percent}>90%</Text>
-        </View>
+            <Text style={style.date}>1° parcela {loan.date}</Text>
+        </TouchableOpacity>
     );
 }
 
@@ -46,7 +48,8 @@ const style = StyleSheet.create({
     date: {
         fontSize: 16,
         fontWeight: 300,
-        marginBottom: "10%"
+        marginBottom: "4%",
+        marginTop: "5%"
     },
 
     percent: {

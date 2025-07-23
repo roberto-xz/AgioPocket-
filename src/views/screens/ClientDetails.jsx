@@ -1,3 +1,4 @@
+
 import { FontAwesome } from "@expo/vector-icons";
 import { Alert, FlatList, Modal, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import CircleIcon from "../components/CircleIcon";
@@ -9,18 +10,24 @@ import nameToChars from "../../utils/NameToChars";
 import FabButton from "../components/FabButton";
 import LoanCard from "../components/LoanCard";
 import LoanForm from "../components/LoanForm";
+import LoanModel from "../../models/LoanModel";
+import LoanService from "../../services/LoanService";
+import InstallmentModel from "../../models/InstallmentModel";
+import InstallmentService from "../../services/InstallmentService";
 
 
 export default function ClientDetails() {
     const navigation = useNavigation();
-    const [editModal,setEditModal] = useState(false);
-    const [LoanModal,setLoanModal] = useState(false);
-
-    const [clientUpdate,setClientUpdate] = useState(false);
+    const clientService = new ClientService()
+    const loanService =   new LoanService()
+    const instalmentService = new InstallmentService();
 
     const route = useRoute()
-    const service = new ClientService()
-    const { clientId, onUpdate, onDelete } = route.params;
+
+    const [editModal,setEditModal] = useState(false);
+    const [LoanModal,setLoanModal] = useState(false);
+    const [componentUpdate,setComponentUpdate] = useState(false);
+    const {clientId, onUpdate, onDelete} = route.params;
 
     const [client, setClient] = useState({
         name: "Nome",
@@ -30,30 +37,68 @@ export default function ClientDetails() {
         sendEmails: false
     })
 
-    useEffect(()=>{
-        const data = service.selectById(clientId);
-        if (data) {
+    const [loans, setLoans] = useState({})
+
+    useEffect(()=> {
+        const client_data = clientService.selectById(clientId);
+        const loans_data  = loanService.selectByClientId(clientId);
+        if (loans_data){setLoans(loans_data)}else{ setLoans({})}
+
+        if (client_data) {
             setClient({
-                name: data.getName,
-                last: data.getLast,
-                email: data.getEmail,
-                phoneNumber: data.getPhoneNumber,
-                sendEmails: (data.getSendEmail == "Y") ? true : false
+                name: client_data.getName,
+                last: client_data.getLast,
+                email: client_data.getEmail,
+                phoneNumber: client_data.getPhoneNumber,
+                sendEmails: (client_data.getSendEmail == "Y") ? true : false
             })
         }
 
-    },[clientUpdate])
+    },[componentUpdate])
 
     const updateCL = (client)=> {
         client.setId =  clientId;
-        setClientUpdate(!clientUpdate);
+        setComponentUpdate(!componentUpdate);
         setEditModal(false);
         onUpdate(client);
     }
 
-    const createLN = ()=>{
+    const createLN = (loan)=> {
+        const status = loanService.create(new LoanModel(
+            clientId,loan.value,loan.date,loan.percent, loan.loans, loan.ploan
+        ));
 
+        if (status) {
+            Alert.alert("Empréstimo", "Empréstimo criado com sucesso !",[{
+                text: "Ok",
+                onPress: () =>{
+                    setComponentUpdate(!componentUpdate);
+                    setLoanModal(false);
+                }
+            }]);
+        }
     }
+
+    const deleteLN = (loan)=>{
+        Alert.alert("Remover Empréstimo","Tem certeza que deseja remover este emepréstimo?'",
+            [{text: "Cancelar", style: "cancel"},{
+                text: 'Sim', style: 'destructive',
+                onPress: ()=>{
+                    if (loanService.remove(loan.id)) {
+                        Alert.alert("Sucesso", "Empréstimo removido!",[{
+                            text: "Ok",
+                            onPress: ()=>{
+                               setComponentUpdate(!componentUpdate);
+                            }
+                        }]); return;
+                    }
+                    Alert.alert("Erro", "Não foi possível remover.");
+                    return;
+                }
+            }]
+        )
+    }
+
 
     return (
         <SafeAreaView style={style.page}>
@@ -117,8 +162,14 @@ export default function ClientDetails() {
                 <FlatList
                     key={2}
                     numColumns={2}
-                    data={[{id: 1, text: "ola"},{id: 2, text: "ola"},{id: 3, text: "ola"}]}
-                    renderItem={()=> <LoanCard/>}
+                    data={loans}
+                    renderItem={(item)=>
+                        <LoanCard
+                            loan={item.item}
+                            onPress={deleteLN}
+                            onLongPress={deleteLN}
+                        />
+                    }
                     keyExtractor={(item) => item.id}
                 />
             </View>

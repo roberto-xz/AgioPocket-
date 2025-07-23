@@ -12,4 +12,8 @@ export default class InstallmentService {
     create(installment: InstallmentModel): boolean {
         return this.installmentDao.insert(installment);
     }
+
+    remove(id:number) {
+        return this.installmentDao.removeAllByLoanId(id);
+    }
 }

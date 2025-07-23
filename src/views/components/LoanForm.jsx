@@ -2,8 +2,10 @@
 import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from "react-native";
 
+export default function LoanForm({onCreate}) {
+    const [fmtPrice, setFmtPrice] = useState(0);
+    const [fmtPloan, setFmtPloan] = useState(0);
 
-export default function LoanForm() {
     const [data,setData] = useState({
         value: "", date:  "",
         loans: 1,  percent: 0,
@@ -16,11 +18,11 @@ export default function LoanForm() {
         price = isNaN(price) ? 0 : price;
         ploan = isNaN(ploan) ? 0 : ploan;
 
-        const fmtPrice = new Intl.NumberFormat("pt-BR",{style: 'currency',currency: 'BRL'}).format(price);
-        const fmtPloan = new Intl.NumberFormat("pt-BR",{style: 'currency',currency: 'BRL'}).format(ploan);
+        setFmtPrice(new Intl.NumberFormat("pt-BR",{style: 'currency',currency: 'BRL'}).format(price));
+        setFmtPloan(new Intl.NumberFormat("pt-BR",{style: 'currency',currency: 'BRL'}).format(ploan));
 
-        setData(prev => ({ ...prev, price: fmtPrice}));
-        setData(prev => ({ ...prev, ploan: fmtPloan}));
+        setData(prev => ({ ...prev, price: price}));
+        setData(prev => ({ ...prev, ploan: ploan}));
 
     }, [data.percent, data.value, data.loans]);
 
@@ -29,20 +31,19 @@ export default function LoanForm() {
             <View style={styles.container}>
                 <View style={styles.loans}>
                     <View>
-                        <Text style={styles.text}>valor das parcelas </Text>
-                        <Text style={styles.price}>{data.ploan} </Text>
+                        <Text style={styles.text}>Parcelas </Text>
+                        <Text style={styles.price}>{data.loans}x {fmtPloan} </Text>
                     </View>
                     <View>
-                        <Text style={styles.text}>Valor Total </Text>
-                        <Text style={styles.price}>{data.price} </Text>
+                        <Text style={styles.text}>Lucro final </Text>
+                        <Text style={styles.price}>{fmtPrice} </Text>
                     </View>
                 </View>
                 <View style={styles.towBlock}>
                     <View style={{width: "45%"}}>
-                        <Text style={styles.title}>Valor</Text>
+                        <Text style={styles.title}>Valor P/Empréstimo</Text>
                         <TextInput
                             value={data.value}
-                            placeholder="Valor do empréstimo"
                             onChangeText={(v)=> setData(prev =>({...prev, value:v}))}
                             style={styles.textInput}
                         />
@@ -51,6 +52,7 @@ export default function LoanForm() {
                     <View style={{width: "45%"}}>
                         <Text style={styles.title}>N°/ Parcelas</Text>
                         <TextInput
+                            value={data.loans}
                             onChangeText={(v)=> setData(prev =>({...prev, loans:v}))}
                             style={styles.textInput}
                         />
@@ -74,7 +76,7 @@ export default function LoanForm() {
                     </View>
                 </View>
 
-                <TouchableOpacity  onPress={() => createLoan(loan)}
+                <TouchableOpacity  onPress={() => onCreate(data)}
                 style={styles.button}>
                     <Text style={styles.textButton}> Criar</Text>
                 </TouchableOpacity>

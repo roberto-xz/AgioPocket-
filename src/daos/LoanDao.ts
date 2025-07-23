@@ -15,13 +15,32 @@ export default class LoanDao {
     insert(loan: LoanModel): number | null {
         try {
             const result = this.database.runSync(
-                queries.insert_loan,loan.getClientId,
-                loan.getValue, loan.getFirstInstallmentDate, loan.getPercentual,
-                loan.getInstallmentsCount
+                queries.insert_loan,
+                loan.getClientId,loan.getValue,loan.getDate,
+                loan.getPercentual,loan.getLoans,loan.getLoansPrices
             );
 
             return (result.changes > 0 ) ? result.lastInsertRowId : null;
         }
-        catch(error){return null;}
+        catch(error) {return null;}
+    }
+
+    selectByClientId(id: number):LoanModel[] | null {
+        let data:LoanModel[] = [];
+        try {
+            const allRows:any = this.database.getAllSync('SELECT * FROM loans WHERE client_id = ?',id);
+            for (const row of allRows) {
+                let loan = new LoanModel(id,row.value,row.date,row.percentual, row.loans,row.loansPrices);
+                loan.setId = row.id;
+                data.push(loan);
+            }
+            return (data.length > 0 ) ? data : null;
+        }
+        catch(error) { return null}
+    }
+
+    remove(id: number): boolean {
+        const result = this.database.runSync("DELETE FROM loans WHERE id = ?",id);
+        return (result.changes > 0);
     }
 }

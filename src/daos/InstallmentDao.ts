@@ -24,4 +24,9 @@ export default class InstallmentDao {
         }
         catch(error){return false;}
     }
+
+    removeAllByLoanId(id: number): boolean {
+        const result = this.database.runSync("DELETE FROM installments WHERE loanId = ?",id);
+        return (result.changes > 0);
+    }
 }

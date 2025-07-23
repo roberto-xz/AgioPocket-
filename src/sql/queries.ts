@@ -25,17 +25,18 @@ const queries = {
     insert_client: 'INSERT INTO clients (name,last,email,phoneNumber,sendEmails) VALUES (?, ?, ?, ?, ?)',
     update_client: 'UPDATE clients SET name = ?, last = ?, email = ?, phoneNumber = ?, sendEmails = ? WHERE id = ?',
 
+    drop_loan_table: 'DROP TABLE IF EXISTS loans',
     create_loan_table: `
         CREATE TABLE IF NOT EXISTS loans (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             client_id INTEGER NOT NULL,
             value REAL NOT NULL,
-            firstInstallmentDate TEXT NOT NULL,
+            date TEXT NOT NULL,
             percentual REAL NOT NULL,
-            installmentsCount INTEGER NOT NULL
+            loans INTEGER NOT NULL,
+            loansPrices REAL NOT NULL
         )`,
-
-    insert_loan: 'INSERT INTO loans (client_id, value, firstInstallmentDate, percentual, installmentsCount) VALUES (?, ?, ?, ?, ?)',
+    insert_loan: 'INSERT INTO loans (client_id, value, date, percentual, loans, loansPrices) VALUES (?, ?, ?, ?, ?, ?)',
 
     create_installment_table: `
         CREATE TABLE IF NOT EXISTS  installments (
