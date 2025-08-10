@@ -56,7 +56,7 @@ O layout completo das telas está disponível no arquivo `design.jpg` na raiz do
 ## ⚠ Licença de Uso
 
 ```
-Copyright (c) 2025 Lucieudo Roberto
+Copyright (c) 2025 Roberto-xz
 
 Este projeto é de uso exclusivamente educacional.
 É proibida a utilização, modificação, distribuição ou comercialização
