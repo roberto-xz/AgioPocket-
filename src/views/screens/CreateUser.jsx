@@ -7,19 +7,26 @@ import { useState } from "react";
 import NextButton from "../components/NextButton";
 import MoneyInput from "../components/MoneyInput";
 import UserService from "../../services/UserService";
+import ClientService from "../../services/ClientService";
 
 
 function createAccount(name, navigation) {
     const userService = new UserService();
 
     navigation.reset({index: 1, routes:[{name:"AgioPocket"}]})
-    return
 
     if (name.split(" ").length > 1 ) {
         const userFName = name.split(" ")[0];
         const userSName = name.split(" ")[1];
 
         if (userService.create(userFName,userSName)){
+            console.log("inserindo clientes falsos para testes !!")
+
+            const client = new ClientService();
+            if (client.dev_createFakeClients()){
+                console.log("Clientes falsos inseridos")
+            }
+
             navigation.reset({index: 1, routes:[{name:"AgioPocket"}]})
             return;
         }
