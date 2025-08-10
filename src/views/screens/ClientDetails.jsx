@@ -12,7 +12,6 @@ import LoanCard from "../components/LoanCard";
 import LoanForm from "../components/LoanForm";
 import LoanModel from "../../models/LoanModel";
 import LoanService from "../../services/LoanService";
-import InstallmentModel from "../../models/InstallmentModel";
 import InstallmentService from "../../services/InstallmentService";
 
 
@@ -99,6 +98,10 @@ export default function ClientDetails() {
         )
     }
 
+    const gotoLoanDetails = (loan)=> {
+        console.log(loan) // aqui chega
+        navigation.navigate("loansDetails",{loan}); // aqui dentro não
+    }
 
     return (
         <SafeAreaView style={style.page}>
@@ -136,7 +139,7 @@ export default function ClientDetails() {
 
                     <TouchableOpacity
                         style={style.button}
-                        onPress={()=> onDelete({id:clientId, page:"details"})}>
+                        onPress={()=> onDelete({id:clientId, page:"clientDetails"})}>
                         <Text style={{color: "#f4f4f4"}}>Excluir</Text>
                     </TouchableOpacity>
                 </View>
@@ -166,7 +169,7 @@ export default function ClientDetails() {
                     renderItem={(item)=>
                         <LoanCard
                             loan={item.item}
-                            onPress={deleteLN}
+                            onPress={(item) => gotoLoanDetails(item)}
                             onLongPress={deleteLN}
                         />
                     }

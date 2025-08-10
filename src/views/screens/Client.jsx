@@ -10,6 +10,7 @@ import ClientDetails from "./ClientDetails";
 import ClientService from "../../services/ClientService";
 import nameToChars from "../../utils/NameToChars";
 import { useNavigation } from "@react-navigation/native";
+import LoansDetails from "./LoansDetails";
 
 function loadClients() {
     const clients = new Array();
@@ -51,7 +52,7 @@ function client() {
                             text: "Ok",
                             onPress: ()=>{
                                 setModifyData(!modifyData)
-                                if (page == "details") navigation.goBack();
+                                if (page == "clientDetails") navigation.goBack();
                             }
                         }]); return;
                     }
@@ -142,8 +143,8 @@ export default function Client() {
     return (
         <stack.Navigator screenOptions={{ headerShown: false }}>
             <stack.Screen name="client" component={client} />
-            <stack.Screen name="clform" component={ClientForm}/>
-            <stack.Screen name="detais" component={ClientDetails}/>
+            <stack.Screen name="clientDetails" component={ClientDetails}/>
+            <stack.Screen name="loansDetails" component={LoansDetails}/>
         </stack.Navigator>
     );
 }

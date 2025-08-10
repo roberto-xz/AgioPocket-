@@ -12,7 +12,7 @@ function renderItem({item, navigation, onDelete, onUpdate}) {
     return (
          <ClientRow
             client={item}
-            press={()=>navigation.navigate("detais",{clientId,onUpdate,onDelete})}
+            press={()=>navigation.navigate("clientDetails",{clientId,onUpdate,onDelete})}
             longPress={() => deleteClient({clientId,onDelete})}
         />
     );
