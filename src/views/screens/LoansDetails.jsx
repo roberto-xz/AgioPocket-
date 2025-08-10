@@ -7,9 +7,14 @@ import LoanIntallmentsCard from "../components/LoanInstallmentsCard";
 import { useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import InstallmentsHistoric from "./InstallmentsHistoric";
+import { useRoute } from "@react-navigation/native";
 
 
-function loansDetails() {
+function MainDetails() {
+    const route = useRoute();
+    const {loan} = route.params;
+    console.log("aqui: mesmo",loan) // aqui undefined
+
     const [dados, setDados] = useState([
         { id: '1', clientName: 'João', clientChars: "JO", data: '2023-10-01', value: 100.00 },
         { id: '2', clientName: 'Maria', clientChars: "MA", data: '2023-10-02', value: 200.50 },
@@ -17,6 +22,7 @@ function loansDetails() {
         { id: '4', clientName: 'Ana', clientChars: "AN", data: '2023-10-04', value: 300.00 },
         { id: '1', clientName: 'João', clientChars: "JO", data: '2023-10-01', value: 100.00 },
     ]);
+
 
     return (
         <SafeAreaView style={styles.page}>
@@ -46,9 +52,16 @@ function loansDetails() {
 
 export default function LoansDetails() {
     const stack = createNativeStackNavigator();
+    const route = useRoute();
+    const {loan} = route.params;
+    // aqui mostra
     return (
         <stack.Navigator screenOptions={{ headerShown: false }}>
-            <stack.Screen name="details" component={loansDetails} />
+            <stack.Screen
+                name="MainDetails"
+                component={MainDetails}
+                initialParams={{loan}}
+            />
             <stack.Screen name="installmentsHistoric" component={InstallmentsHistoric} />
         </stack.Navigator>
     );
