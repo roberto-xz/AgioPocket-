@@ -29,6 +29,13 @@ export default class ClientDao{
         }catch(error){return false;}
     }
 
+    dev_insertFakeClients(): boolean {
+         try {
+            const result = this.database.runSync(fakeData.clientes);
+            return ( result.changes > 0 )
+        }catch(error){return false;}
+    }
+
     update(client: ClientModel) : boolean {
         try {
             const result = this.database.runSync(

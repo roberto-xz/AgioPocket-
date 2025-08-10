@@ -12,6 +12,10 @@ export default class ClientService {
         return this.clientDao.insert(client);
     }
 
+    dev_createFakeClients(): boolean {
+        return this.clientDao.dev_insertFakeClients();
+    }
+
     update(client: ClientModel): boolean {
         return this.clientDao.update(client);
     }
